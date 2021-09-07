@@ -5,7 +5,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
-	"path/filepath"
 	"strings"
 
 	piperhttp "github.com/SAP/jenkins-library/pkg/http"
@@ -110,17 +109,13 @@ func runKanikoExecute(config *kanikoExecuteOptions, telemetryData *telemetry.Cus
 	}
 
 	cwd, err := os.Getwd()
-	var files []string
-	errF := filepath.Walk(cwd, func(path string, info os.FileInfo, err error) error {
-		files = append(files, path)
-		return nil
-	})
-	if errF != nil {
-		panic(errF)
+	files, errf := ioutil.ReadDir(".")
+	if errf != nil {
+		panic(errf)
 	}
 	fmt.Println("Here are the files in this directory")
-	for _, file := range files {
-		fmt.Println(file)
+	for _, f := range files {
+		fmt.Println(f.Name())
 	}
 	if err != nil {
 		return errors.Wrap(err, "failed to get current working directory")

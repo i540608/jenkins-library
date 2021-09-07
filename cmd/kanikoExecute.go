@@ -94,6 +94,7 @@ func runKanikoExecute(config *kanikoExecuteOptions, telemetryData *telemetry.Cus
 	}
 
 	dockerConfig := []byte(`{"auths":{}}`)
+	fmt.Println("Here is the dockerConfigJSON value: ", config.DockerConfigJSON)
 	if len(config.DockerConfigJSON) > 0 {
 		var err error
 		dockerConfig, err = fileUtils.FileRead(config.DockerConfigJSON)

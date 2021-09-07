@@ -101,7 +101,7 @@ func runKanikoExecute(config *kanikoExecuteOptions, telemetryData *telemetry.Cus
 			return errors.Wrapf(err, "failed to read file '%v'", config.DockerConfigJSON)
 		}
 	}
-	fmt.Println("Here is the used dockerConfig: ", dockerConfig)
+	fmt.Println("Here is the used dockerConfig: ", string(dockerConfig))
 
 	if err := fileUtils.FileWrite("/kaniko/.docker/config.json", dockerConfig, 0644); err != nil {
 		return errors.Wrap(err, "failed to write file '/kaniko/.docker/config.json'")

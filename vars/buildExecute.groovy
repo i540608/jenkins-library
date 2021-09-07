@@ -100,6 +100,7 @@ void call(Map parameters = [:]) {
 
                 if (config.buildTool == 'kaniko') {
                     def containerImageNameAndTag = config.dockerRegistryUrl ? "${dockerUtils.getRegistryFromUrl(config.dockerRegistryUrl)}/${dockerImageNameAndTag}" : ''
+                    echo "Here is the build script sent to kaniko: ${script}"
                     kanikoExecute script: script, containerImageNameAndTag: containerImageNameAndTag
                 } else {
                     def dockerBuildImage = docker.build(dockerImageNameAndTag, "${config.containerBuildOptions ?: ''} .")

@@ -97,6 +97,7 @@ func runKanikoExecute(config *kanikoExecuteOptions, telemetryData *telemetry.Cus
 	if len(config.DockerConfigJSON) > 0 {
 		var err error
 		dockerConfig, err = fileUtils.FileRead(config.DockerConfigJSON)
+		fmt.Println("Here is the used dockerConfig: ", dockerConfig)
 		if err != nil {
 			return errors.Wrapf(err, "failed to read file '%v'", config.DockerConfigJSON)
 		}

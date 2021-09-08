@@ -113,7 +113,7 @@ func runKanikoExecute(config *kanikoExecuteOptions, telemetryData *telemetry.Cus
 		fmt.Println(f.Name())
 	}
 
-	files1, errf := ioutil.ReadDir("./.pipeline")
+	files1, errf := ioutil.ReadDir(".pipeline")
 	if errf != nil {
 		panic(errf)
 	}
@@ -122,7 +122,7 @@ func runKanikoExecute(config *kanikoExecuteOptions, telemetryData *telemetry.Cus
 		fmt.Println(f.Name())
 	}
 
-	files2, errf := ioutil.ReadDir("./.pipeline/.docker")
+	files2, errf := ioutil.ReadDir(".pipeline/.docker")
 	if errf != nil {
 		panic(errf)
 	}

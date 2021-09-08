@@ -107,7 +107,7 @@ void call(Map parameters = [:]) {
                     echo "Container Image name and tag 111111: ${containerImageNameAndTag}"
                     echo "config sent into kaniko: ${config}"
                     echo "config.lindaTestParam: ${config.lindaTestParam}"
-                    kanikoExecute script: script, containerImageNameAndTag: containerImageNameAndTag
+                    kanikoExecute script: script, containerImageNameAndTag: containerImageNameAndTag, dockerConfigJSON: config.lindaTestParam
                 } else {
                     def dockerBuildImage = docker.build(dockerImageNameAndTag, "${config.containerBuildOptions ?: ''} .")
                     //only push if registry is defined

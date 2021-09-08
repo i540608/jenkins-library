@@ -103,6 +103,15 @@ func runKanikoExecute(config *kanikoExecuteOptions, telemetryData *telemetry.Cus
 		panic(errP)
 	}
 	fmt.Println("This is the working directory 33333333333: ",dir)
+
+	files, errf := ioutil.ReadDir(".")
+	if errf != nil {
+		panic(errf)
+	}
+	fmt.Println("Here are the files in this directory 444444444:")
+	for _, f := range files {
+		fmt.Println(f.Name())
+	}
 	if len(config.DockerConfigJSON) > 0 {
 		var err error
 		dockerConfig, err = fileUtils.FileRead(config.DockerConfigJSON)
@@ -117,14 +126,7 @@ func runKanikoExecute(config *kanikoExecuteOptions, telemetryData *telemetry.Cus
 	}
 
 	cwd, err := os.Getwd()
-	files, errf := ioutil.ReadDir(".")
-	if errf != nil {
-		panic(errf)
-	}
-	fmt.Println("Here are the files in this directory")
-	for _, f := range files {
-		fmt.Println(f.Name())
-	}
+
 	if err != nil {
 		return errors.Wrap(err, "failed to get current working directory")
 	}

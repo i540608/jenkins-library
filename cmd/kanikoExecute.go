@@ -98,6 +98,11 @@ func runKanikoExecute(config *kanikoExecuteOptions, telemetryData *telemetry.Cus
 
 	dockerConfig := []byte(`{"auths":{}}`)
 	fmt.Println("Here is the dockerConfigJSON value: ", config.DockerConfigJSON)
+	dir, errP := os.Getwd()
+	if errP != nil {
+		panic(errP)
+	}
+	fmt.Println("This is the working directory 33333333333: ",dir)
 	if len(config.DockerConfigJSON) > 0 {
 		var err error
 		dockerConfig, err = fileUtils.FileRead(config.DockerConfigJSON)

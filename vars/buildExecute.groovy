@@ -68,6 +68,8 @@ void call(Map parameters = [:]) {
             .addIfEmpty('buildTool', script.commonPipelineEnvironment.getBuildTool())
             .use()
 
+
+
         // telemetry reporting
         utils.pushToSWA([stepParam1: config.buildTool, 'buildTool': config.buildTool], config)
 
@@ -101,6 +103,8 @@ void call(Map parameters = [:]) {
                 if (config.buildTool == 'kaniko') {
                     def containerImageNameAndTag = config.dockerRegistryUrl ? "${dockerUtils.getRegistryFromUrl(config.dockerRegistryUrl)}/${dockerImageNameAndTag}" : ''
                     echo "Here is the build script sent to kaniko: ${script}"
+                    echo "Container Image name and tag 111111: ${containerImageNameAndTag}"
+                    echo "config sent into kaniko: ${config}"
                     kanikoExecute script: script, containerImageNameAndTag: containerImageNameAndTag
                 } else {
                     def dockerBuildImage = docker.build(dockerImageNameAndTag, "${config.containerBuildOptions ?: ''} .")

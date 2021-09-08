@@ -105,6 +105,7 @@ void call(Map parameters = [:]) {
                     echo "Here is the build script sent to kaniko: ${script}"
                     echo "Container Image name and tag 111111: ${containerImageNameAndTag}"
                     echo "config sent into kaniko: ${config}"
+                    echo "config.lindaTestParam: ${config.lindaTestParam}"
                     kanikoExecute script: script, containerImageNameAndTag: containerImageNameAndTag
                 } else {
                     def dockerBuildImage = docker.build(dockerImageNameAndTag, "${config.containerBuildOptions ?: ''} .")

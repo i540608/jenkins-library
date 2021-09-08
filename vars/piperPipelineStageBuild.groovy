@@ -29,7 +29,8 @@ import static com.sap.piper.Prerequisites.checkScript
     /** Executes static code checks for Maven based projects. The plugins SpotBugs and PMD are used. */
     'mavenExecuteStaticCodeChecks',
     /** Executes linting for npm projects. */
-    'npmExecuteLint'
+    'npmExecuteLint',
+    'lindaTestParam'
 ]
 @Field Set STEP_CONFIG_KEYS = GENERAL_CONFIG_KEYS.plus(STAGE_STEP_KEYS)
 @Field Set PARAMETER_KEYS = STEP_CONFIG_KEYS

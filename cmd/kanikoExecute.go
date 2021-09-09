@@ -102,7 +102,7 @@ func runKanikoExecute(config *kanikoExecuteOptions, telemetryData *telemetry.Cus
 	if errP != nil {
 		panic(errP)
 	}
-	fmt.Println("This is the working directory 33333333333: ",dir)
+	fmt.Println("This is the working directory 33333333333: ", dir)
 
 	files, errf := ioutil.ReadDir(".")
 	if errf != nil {

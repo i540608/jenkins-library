@@ -33,7 +33,8 @@ import static com.sap.piper.Prerequisites.checkScript
     'npmInstall',
     /** For buildTool npm: List of npm run scripts to execute */
     'npmRunScripts',
-    'lindaTestParam'
+    'lindaTestParam',
+    'kanikoExecute'
 ])
 @Field Set PARAMETER_KEYS = STEP_CONFIG_KEYS
 
@@ -67,6 +68,7 @@ void call(Map parameters = [:]) {
             .mixin(parameters, PARAMETER_KEYS)
             .addIfEmpty('dockerImageTag', script.commonPipelineEnvironment.getArtifactVersion())
             .addIfEmpty('buildTool', script.commonPipelineEnvironment.getBuildTool())
+            .addIfEmpty('kanikoExecute', script.commonPipelineEnvironment.configuration.runStep?.get(stageName)?.kanikoExecute)
             .use()
 
 
@@ -87,6 +89,11 @@ void call(Map parameters = [:]) {
                 break
             case 'npm':
                 npmExecuteScripts script: script, install: config.npmInstall, runScripts: config.npmRunScripts
+                break
+            case 'kaniko':
+                if (config.uiVeri5ExecuteTests) {
+                    kanikoExecute script: script
+                }
                 break
             case ['docker', 'kaniko']:
                 DockerUtils dockerUtils = new DockerUtils(script)

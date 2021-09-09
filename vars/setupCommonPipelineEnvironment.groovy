@@ -92,7 +92,7 @@ void call(Map parameters = [:]) {
 
         piperLoadGlobalExtensions script: script, customDefaults: parameters.customDefaults, customDefaultsFromFiles: customDefaultsFiles
 
-        String stashIncludes = '.pipeline/**, **/Dockerfile'
+        String stashIncludes = '.pipeline/**'
         if (configFile && !configFile.startsWith('.pipeline/')) {
             stashIncludes += ", $configFile"
         }

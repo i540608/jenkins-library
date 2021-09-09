@@ -113,23 +113,23 @@ func runKanikoExecute(config *kanikoExecuteOptions, telemetryData *telemetry.Cus
 		fmt.Println(f.Name())
 	}
 
-	files1, errf := ioutil.ReadDir(".pipeline")
+	files1, errf := ioutil.ReadDir(".docker")
 	if errf != nil {
 		panic(errf)
 	}
-	fmt.Println("Here are the files in this directory .pipeline 55555:")
+	fmt.Println("Here are the files in this directory .docker 55555:")
 	for _, f := range files1 {
 		fmt.Println(f.Name())
 	}
 
-	files2, errf := ioutil.ReadDir(".pipeline/.docker")
-	if errf != nil {
-		panic(errf)
-	}
-	fmt.Println("Here are the files in this directory .pipeline/.docker 6666666:")
-	for _, f := range files2 {
-		fmt.Println(f.Name())
-	}
+	//files2, errf := ioutil.ReadDir(".pipeline/.docker")
+	//if errf != nil {
+	//	panic(errf)
+	//}
+	//fmt.Println("Here are the files in this directory .pipeline/.docker 6666666:")
+	//for _, f := range files2 {
+	//	fmt.Println(f.Name())
+	//}
 	if len(config.DockerConfigJSON) > 0 {
 		var err error
 		dockerConfig, err = fileUtils.FileRead(config.DockerConfigJSON)

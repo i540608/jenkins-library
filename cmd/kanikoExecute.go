@@ -113,14 +113,14 @@ func runKanikoExecute(config *kanikoExecuteOptions, telemetryData *telemetry.Cus
 		fmt.Println(f.Name())
 	}
 
-	files1, errf := ioutil.ReadDir(".docker")
-	if errf != nil {
-		panic(errf)
-	}
-	fmt.Println("Here are the files in this directory .docker 55555:")
-	for _, f := range files1 {
-		fmt.Println(f.Name())
-	}
+	//files1, errf := ioutil.ReadDir(".docker")
+	//if errf != nil {
+	//	panic(errf)
+	//}
+	//fmt.Println("Here are the files in this directory .docker 55555:")
+	//for _, f := range files1 {
+	//	fmt.Println(f.Name())
+	//}
 
 	//files2, errf := ioutil.ReadDir(".pipeline/.docker")
 	//if errf != nil {

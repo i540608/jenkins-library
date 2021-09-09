@@ -88,9 +88,9 @@ void call(Map parameters = [:]) {
             case 'npm':
                 npmExecuteScripts script: script, install: config.npmInstall, runScripts: config.npmRunScripts
                 break
-            case 'kaniko':
-                kanikoExecute script: script
-                break
+//             case 'kaniko':
+//                 kanikoExecute script: script
+//                 break
             case ['docker', 'kaniko']:
                 DockerUtils dockerUtils = new DockerUtils(script)
                 if (config.buildTool == 'docker' && !dockerUtils.withDockerDaemon()) {

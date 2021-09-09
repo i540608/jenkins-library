@@ -33,7 +33,6 @@ import static com.sap.piper.Prerequisites.checkScript
     'npmInstall',
     /** For buildTool npm: List of npm run scripts to execute */
     'npmRunScripts',
-    'lindaTestParam',
 ])
 @Field Set PARAMETER_KEYS = STEP_CONFIG_KEYS
 
@@ -68,8 +67,6 @@ void call(Map parameters = [:]) {
             .addIfEmpty('dockerImageTag', script.commonPipelineEnvironment.getArtifactVersion())
             .addIfEmpty('buildTool', script.commonPipelineEnvironment.getBuildTool())
             .use()
-
-        echo "Build step config.lindaTestParam 9999: ${config.lindaTestParam}"
 
         // telemetry reporting
         utils.pushToSWA([stepParam1: config.buildTool, 'buildTool': config.buildTool], config)
@@ -109,8 +106,7 @@ void call(Map parameters = [:]) {
                     echo "Here is the build script sent to kaniko: ${script}"
                     echo "Container Image name and tag 111111: ${containerImageNameAndTag}"
                     echo "config sent into kaniko: ${config}"
-                    echo "config.lindaTestParam: ${config.lindaTestParam}"
-                    kanikoExecute script: script, containerImageNameAndTag: containerImageNameAndTag, dockerConfigJSON: config.lindaTestParam
+                    kanikoExecute script: script, containerImageNameAndTag: containerImageNameAndTag
                 } else {
                     def dockerBuildImage = docker.build(dockerImageNameAndTag, "${config.containerBuildOptions ?: ''} .")
                     //only push if registry is defined

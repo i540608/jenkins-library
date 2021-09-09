@@ -69,7 +69,7 @@ void call(Map parameters = [:]) {
             .addIfEmpty('buildTool', script.commonPipelineEnvironment.getBuildTool())
             .use()
 
-
+        echo "Build step config.lindaTestParam 9999: ${config.lindaTestParam}"
 
         // telemetry reporting
         utils.pushToSWA([stepParam1: config.buildTool, 'buildTool': config.buildTool], config)

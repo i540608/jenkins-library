@@ -57,6 +57,8 @@ void call(Map parameters = [:]) {
         .addIfEmpty('mavenExecuteStaticCodeChecks', script.commonPipelineEnvironment.configuration.runStep?.get(stageName)?.mavenExecuteStaticCodeChecks)
         .use()
 
+        echo "Build step config.lindaTestParam 5678: ${config.lindaTestParam}"
+
     piperStageWrapper (script: script, stageName: stageName) {
 
         // telemetry reporting

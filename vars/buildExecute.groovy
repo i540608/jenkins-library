@@ -91,7 +91,8 @@ void call(Map parameters = [:]) {
                 npmExecuteScripts script: script, install: config.npmInstall, runScripts: config.npmRunScripts
                 break
             case 'kaniko':
-                if (config.uiVeri5ExecuteTests) {
+                echo "config.kanikoExecute 00000: ${config.kanikoExecute}"
+                if (config.kanikoExecute) {
                     kanikoExecute script: script
                 }
                 break

@@ -85,36 +85,27 @@ void call(Map parameters = [:]) {
             case 'npm':
                 npmExecuteScripts script: script, install: config.npmInstall, runScripts: config.npmRunScripts
                 break
-//             case 'kaniko':
-//                 kanikoExecute script: script
-//                 break
             case ['docker', 'kaniko']:
                 DockerUtils dockerUtils = new DockerUtils(script)
                 if (config.buildTool == 'docker' && !dockerUtils.withDockerDaemon()) {
                     config.buildTool = 'kaniko'
                     echo "[${STEP_NAME}] No Docker daemon available, thus switching to Kaniko build"
                 }
+                if (config.buildTool == 'kaniko'){
+                    kanikoExecute script: script
+                }else{
+                    ConfigurationHelper.newInstance(this, config)
+                                    .withMandatoryProperty('dockerImageName')
+                                    .withMandatoryProperty('dockerImageTag')
 
-                ConfigurationHelper.newInstance(this, config)
-                    .withMandatoryProperty('dockerImageName')
-                    .withMandatoryProperty('dockerImageTag')
-
-                def dockerImageNameAndTag = "${config.dockerImageName}:${config.dockerImageTag}"
-
-                if (config.buildTool == 'kaniko') {
-                    def containerImageNameAndTag = config.dockerRegistryUrl ? "${dockerUtils.getRegistryFromUrl(config.dockerRegistryUrl)}/${dockerImageNameAndTag}" : ''
-                    echo "Here is the build script sent to kaniko: ${script}"
-                    echo "Container Image name and tag 111111: ${containerImageNameAndTag}"
-                    echo "config sent into kaniko: ${config}"
-                    kanikoExecute script: script, containerImageNameAndTag: containerImageNameAndTag
-                } else {
+                    def dockerImageNameAndTag = "${config.dockerImageName}:${config.dockerImageTag}"
                     def dockerBuildImage = docker.build(dockerImageNameAndTag, "${config.containerBuildOptions ?: ''} .")
                     //only push if registry is defined
                     if (config.dockerRegistryUrl) {
                         containerPushToRegistry script: script, dockerBuildImage: dockerBuildImage, dockerRegistryUrl: config.dockerRegistryUrl
                     }
+                    script.commonPipelineEnvironment.setValue('containerImage', dockerImageNameAndTag)
                 }
-                script.commonPipelineEnvironment.setValue('containerImage', dockerImageNameAndTag)
                 break
             default:
                 if (config.dockerImage && config.dockerCommand) {

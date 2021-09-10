@@ -43,9 +43,6 @@ func kanikoExecute(config kanikoExecuteOptions, telemetryData *telemetry.CustomD
 
 func runKanikoExecute(config *kanikoExecuteOptions, telemetryData *telemetry.CustomData, commonPipelineEnvironment *kanikoExecuteCommonPipelineEnvironment, execRunner command.ExecRunner, httpClient piperhttp.Sender, fileUtils piperutils.FileUtils) error {
 	// backward compatibility for parameter ContainerBuildOptions
-
-	fmt.Println("the KanikoExecuteOptions 2222222222: ", config)
-
 	if len(config.ContainerBuildOptions) > 0 {
 		config.BuildOptions = strings.Split(config.ContainerBuildOptions, " ")
 		log.Entry().Warning("Parameter containerBuildOptions is deprecated, please use buildOptions instead.")
@@ -113,23 +110,6 @@ func runKanikoExecute(config *kanikoExecuteOptions, telemetryData *telemetry.Cus
 		fmt.Println(f.Name())
 	}
 
-	//files1, errf := ioutil.ReadDir(".docker")
-	//if errf != nil {
-	//	panic(errf)
-	//}
-	//fmt.Println("Here are the files in this directory .docker 55555:")
-	//for _, f := range files1 {
-	//	fmt.Println(f.Name())
-	//}
-
-	//files2, errf := ioutil.ReadDir(".pipeline/.docker")
-	//if errf != nil {
-	//	panic(errf)
-	//}
-	//fmt.Println("Here are the files in this directory .pipeline/.docker 6666666:")
-	//for _, f := range files2 {
-	//	fmt.Println(f.Name())
-	//}
 	if len(config.DockerConfigJSON) > 0 {
 		var err error
 		dockerConfig, err = fileUtils.FileRead(config.DockerConfigJSON)
@@ -137,14 +117,13 @@ func runKanikoExecute(config *kanikoExecuteOptions, telemetryData *telemetry.Cus
 			return errors.Wrapf(err, "failed to read file '%v'", config.DockerConfigJSON)
 		}
 	}
-	fmt.Println("Here is the used dockerConfig: ", string(dockerConfig))
+	fmt.Println("Here is the used dockerConfig 55555555: ", string(dockerConfig))
 
 	if err := fileUtils.FileWrite("/kaniko/.docker/config.json", dockerConfig, 0644); err != nil {
 		return errors.Wrap(err, "failed to write file '/kaniko/.docker/config.json'")
 	}
 
 	cwd, err := os.Getwd()
-
 	if err != nil {
 		return errors.Wrap(err, "failed to get current working directory")
 	}

@@ -5,6 +5,5 @@ import groovy.transform.Field
 
 void call(Map parameters = [:]) {
     List credentials = [[type: 'file', id: 'dockerConfigJsonCredentialsId', env: ['PIPER_dockerConfigJSON']]]
-    echo "Parameters in kEx groovy : ${parameters}"
     piperExecuteBin(parameters, STEP_NAME, METADATA_FILE, credentials)
 }

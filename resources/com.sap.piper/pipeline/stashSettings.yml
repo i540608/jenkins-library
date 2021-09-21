@@ -13,6 +13,7 @@ Init:
 Build:
   unstash:
     - source
+    - differentName
   stashes: []
 
 Integration:

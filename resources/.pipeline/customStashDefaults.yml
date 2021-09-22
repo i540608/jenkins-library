@@ -5,7 +5,7 @@ Init:
       includes: "**/*"
       excludes: ".pipeline/**"
     - name: "secrets"
-      includes: ".pipeline/**"
+      includes: ".secrets/**"
 'Pull-Request Voting':
   unstash:
     - source

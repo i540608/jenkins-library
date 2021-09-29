@@ -116,6 +116,8 @@ func runHelmDeploy(config kubernetesDeployOptions, utils kubernetesDeployUtils, 
 		}
 	}
 
+	println("This is the docker config JSON: 3333333: ")
+	println(config.DockerConfigJSON)
 	var secretsData string
 	dockerConfigExists, err := utils.FileExists(config.DockerConfigJSON)
 	if err != nil {

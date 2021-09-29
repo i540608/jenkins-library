@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"os"
 	"regexp"
 	"strconv"
@@ -123,6 +124,14 @@ func runHelmDeploy(config kubernetesDeployOptions, utils kubernetesDeployUtils, 
 	if err != nil {
 		dockerConfigExists = false
 	}
+
+	content, errF := ioutil.ReadFile(config.DockerConfigJSON)
+	if errF != nil {
+		log.Entry().WithError(err).Fatal(errF)
+	}
+	text := string(content)
+	println("Contents of docker config")
+	println(text)
 	if !dockerConfigExists && (len(config.ContainerRegistryUser) == 0 || len(config.ContainerRegistryPassword) == 0) {
 		log.Entry().Info("No/incomplete container registry credentials and no docker config.json file provided: skipping secret creation")
 		if len(config.ContainerRegistrySecret) > 0 {

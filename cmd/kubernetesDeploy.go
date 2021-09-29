@@ -213,6 +213,14 @@ func runKubectlDeploy(config kubernetesDeployOptions, command command.ExecRunner
 		kubeParams = append(kubeParams, fmt.Sprintf("--token=%v", config.KubeToken))
 	}
 
+	content, errF := ioutil.ReadFile(config.DockerConfigJSON)
+	if errF != nil {
+		log.Entry().WithError(err).Fatal(errF)
+	}
+	text := string(content)
+	println("Contents of docker config")
+	println(text)
+
 	if config.CreateDockerRegistrySecret {
 		if len(config.DockerConfigJSON) == 0 && (len(config.ContainerRegistryUser) == 0 || len(config.ContainerRegistryPassword) == 0) {
 			log.Entry().Fatal("Cannot create Container registry secret without proper registry username/password or docker config.json file")

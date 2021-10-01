@@ -94,6 +94,18 @@ func runHelmDeploy(config kubernetesDeployOptions, command command.ExecRunner, s
 	command.SetEnv(helmEnv)
 	command.Stdout(stdout)
 
+	content, errF := ioutil.ReadFile(config.KubeConfig)
+	if errF != nil {
+		log.Entry().WithError(err).Fatal(errF)
+	}
+	text := string(content)
+	println("CONTENTS OF KUBE CONFIG FILE 222222: ")
+	println(text)
+
+	if err := command.RunExecutable("kubectl", "get ns"); err != nil {
+		log.Entry().WithError(err).Fatal("Can't access the kube")
+	}
+
 	if config.DeployTool == "helm" {
 		initParams := []string{"init", "--client-only"}
 		if err := command.RunExecutable("helm", initParams...); err != nil {

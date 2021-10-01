@@ -228,6 +228,13 @@ func runKubectlDeploy(config kubernetesDeployOptions, command command.ExecRunner
 		fmt.Sprintf("--namespace=%v", config.Namespace),
 	}
 
+	content, errF := ioutil.ReadFile(config.KubeConfig)
+	if errF != nil {
+		log.Entry().WithError(err).Fatal(errF)
+	}
+	text := string(content)
+	println("CONTENTS OF KUBE CONFIG FILE 222222: ")
+	println(text)
 	if len(config.KubeConfig) > 0 {
 		log.Entry().Info("Using KUBECONFIG environment for authentication.")
 		kubeEnv := []string{fmt.Sprintf("KUBECONFIG=%v", config.KubeConfig)}

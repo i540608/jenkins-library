@@ -54,6 +54,7 @@ func runKubernetesDeploy(config kubernetesDeployOptions, command command.ExecRun
 }
 
 func runHelmDeploy(config kubernetesDeployOptions, command command.ExecRunner, stdout io.Writer) error {
+	println("CONFIG IS: ", config)
 	if len(config.ChartPath) <= 0 {
 		return fmt.Errorf("chart path has not been set, please configure chartPath parameter")
 	}
@@ -64,7 +65,10 @@ func runHelmDeploy(config kubernetesDeployOptions, command command.ExecRunner, s
 	if err != nil {
 		log.Entry().WithError(err).Fatalf("Container registry url '%v' incorrect", config.ContainerRegistryURL)
 	}
+	println("CONTAINER REGISTRY: ", containerRegistry)
 	containerImageName, containerImageTag, err := splitFullImageName(config.Image)
+	println("CONTAINER IMAGE NAME: ", containerImageName)
+	println("CONTAINER IMAGE TAG: ", containerImageTag)
 	if err != nil {
 		log.Entry().WithError(err).Fatalf("Container image '%v' incorrect", config.Image)
 	}
@@ -75,6 +79,8 @@ func runHelmDeploy(config kubernetesDeployOptions, command command.ExecRunner, s
 	helmLogFields["Context"] = config.KubeContext
 	helmLogFields["Kubeconfig"] = config.KubeConfig
 	log.Entry().WithFields(helmLogFields).Debug("Calling Helm")
+
+	println("HELM LOG FIELDS: ", fmt.Sprint(helmLogFields))
 
 	helmEnv := []string{fmt.Sprintf("KUBECONFIG=%v", config.KubeConfig)}
 	if config.DeployTool == "helm" && len(config.TillerNamespace) > 0 {
@@ -98,6 +104,13 @@ func runHelmDeploy(config kubernetesDeployOptions, command command.ExecRunner, s
 			secretsData = fmt.Sprintf(",imagePullSecrets[0].name=%v", config.ContainerRegistrySecret)
 		}
 	} else {
+		content, errF := ioutil.ReadFile(config.DockerConfigJSON)
+		if errF != nil {
+			log.Entry().WithError(err).Fatal(errF)
+		}
+		text := string(content)
+		println("CONTENTS OF DOCKER CONFIG FILE 11111: ")
+		println(text)
 		var dockerRegistrySecret bytes.Buffer
 		command.Stdout(&dockerRegistrySecret)
 		kubeSecretParams := defineKubeSecretParams(config, containerRegistry)

@@ -54,7 +54,8 @@ func runKubernetesDeploy(config kubernetesDeployOptions, command command.ExecRun
 }
 
 func runHelmDeploy(config kubernetesDeployOptions, command command.ExecRunner, stdout io.Writer) error {
-	println("CONFIG IS: ", config)
+	println("CONFIG IS: ")
+	println(config)
 	if len(config.ChartPath) <= 0 {
 		return fmt.Errorf("chart path has not been set, please configure chartPath parameter")
 	}
@@ -65,10 +66,13 @@ func runHelmDeploy(config kubernetesDeployOptions, command command.ExecRunner, s
 	if err != nil {
 		log.Entry().WithError(err).Fatalf("Container registry url '%v' incorrect", config.ContainerRegistryURL)
 	}
-	println("CONTAINER REGISTRY: ", containerRegistry)
+	println("CONTAINER REGISTRY: ")
+	println(containerRegistry)
 	containerImageName, containerImageTag, err := splitFullImageName(config.Image)
-	println("CONTAINER IMAGE NAME: ", containerImageName)
-	println("CONTAINER IMAGE TAG: ", containerImageTag)
+	println("CONTAINER IMAGE NAME: ")
+	println(containerImageName)
+	println("CONTAINER IMAGE TAG: ")
+	println(containerImageTag)
 	if err != nil {
 		log.Entry().WithError(err).Fatalf("Container image '%v' incorrect", config.Image)
 	}
@@ -80,7 +84,7 @@ func runHelmDeploy(config kubernetesDeployOptions, command command.ExecRunner, s
 	helmLogFields["Kubeconfig"] = config.KubeConfig
 	log.Entry().WithFields(helmLogFields).Debug("Calling Helm")
 
-	println("HELM LOG FIELDS: ", fmt.Sprint(helmLogFields))
+	//println("HELM LOG FIELDS: ", fmt.Sprint(helmLogFields))
 
 	helmEnv := []string{fmt.Sprintf("KUBECONFIG=%v", config.KubeConfig)}
 	if config.DeployTool == "helm" && len(config.TillerNamespace) > 0 {

@@ -55,7 +55,7 @@ func runKubernetesDeploy(config kubernetesDeployOptions, command command.ExecRun
 
 func runHelmDeploy(config kubernetesDeployOptions, command command.ExecRunner, stdout io.Writer) error {
 	println("CONFIG IS: ")
-	println(config)
+	fmt.Println(config)
 	if len(config.ChartPath) <= 0 {
 		return fmt.Errorf("chart path has not been set, please configure chartPath parameter")
 	}
